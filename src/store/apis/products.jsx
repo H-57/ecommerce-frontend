@@ -1,15 +1,25 @@
 
-import axios from"axios"
 
-export  function  fetchProducts() {
+export async function  fetchProducts() {
 
+    // TODO: change api urls
+    const response= await(await fetch(`http://localhost:4000/products`)).json()
     
-    const response=  axios.get(`https://dummyjson.com/products`).then((result) => {
-   console.log(result.data)
-    });
-    return response.data
+    return await response
     
    } 
     
 
+   export async function  fetchProductsBYFilter(filters) {
+
+let filterString=``
+for(let key in filters){
+    filterString+=`${key}=${filters[key]}&`
+}
+    // TODO: change api urls
+    const response= await(await fetch(`http://localhost:4000/products?${filterString}`)).json()
+    
+    return await response
+    
+   } 
   

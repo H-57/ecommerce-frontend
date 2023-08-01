@@ -1,36 +1,61 @@
-
 "use client"
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect,useState } from "react";
+import { fetchAllProducts } from "@/store/slices/products";
 import { StarIcon } from "@heroicons/react/20/solid";
-
-import { useEffect } from "react";
 import Link from "next/link";
+import Pagination from "../pagination/Pagination"
+import Filter  from"../filters/Filter"
+export default function ProducList() {
+const product = useSelector((state) => state.product.products);
+const dispatch = useDispatch()
+
+const [Page, setPage] = useState(1)
+const totalPages=product/12
+
+  useEffect(() => {
+
+   dispatch(fetchAllProducts())
+
+
+  }, [])
 
 
 
 
 
 
-export default async function ProducList() {
-
-
+  if (product ==null) {
+    return (<h1 className="text-4xl font-bold tracking-tight text-gray-900">loading ....</h1>)
+  }
  
-   const products=[{"id":1,"title":"iPhone 9","description":"An apple mobile which is nothing like apple","price":549,"discountPercentage":12.96,"rating":4.69,"stock":94,"brand":"Apple","category":"smartphones","thumbnail":"https://i.dummyjson.com/data/products/1/thumbnail.jpg","images":["https://i.dummyjson.com/data/products/1/1.jpg","https://i.dummyjson.com/data/products/1/2.jpg","https://i.dummyjson.com/data/products/1/3.jpg","https://i.dummyjson.com/data/products/1/4.jpg","https://i.dummyjson.com/data/products/1/thumbnail.jpg"]},{"id":2,"title":"iPhone X","description":"SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...","price":899,"discountPercentage":17.94,"rating":4.44,"stock":34,"brand":"Apple","category":"smartphones","thumbnail":"https://i.dummyjson.com/data/products/2/thumbnail.jpg","images":["https://i.dummyjson.com/data/products/2/1.jpg","https://i.dummyjson.com/data/products/2/2.jpg","https://i.dummyjson.com/data/products/2/3.jpg","https://i.dummyjson.com/data/products/2/thumbnail.jpg"]},{"id":3,"title":"Samsung Universe 9","description":"Samsung's new variant which goes beyond Galaxy to the Universe","price":1249,"discountPercentage":15.46,"rating":4.09,"stock":36,"brand":"Samsung","category":"smartphones","thumbnail":"https://i.dummyjson.com/data/products/3/thumbnail.jpg","images":["https://i.dummyjson.com/data/products/3/1.jpg"]},{"id":4,"title":"OPPOF19","description":"OPPO F19 is officially announced on April 2021.","price":280,"discountPercentage":17.91,"rating":4.3,"stock":123,"brand":"OPPO","category":"smartphones","thumbnail":"https://i.dummyjson.com/data/products/4/thumbnail.jpg","images":["https://i.dummyjson.com/data/products/4/1.jpg","https://i.dummyjson.com/data/products/4/2.jpg","https://i.dummyjson.com/data/products/4/3.jpg","https://i.dummyjson.com/data/products/4/4.jpg","https://i.dummyjson.com/data/products/4/thumbnail.jpg"]},{"id":5,"title":"Huawei P30","description":"Huawei’s re-badged P30 Pro New Edition was officially unveiled yesterday in Germany and now the device has made its way to the UK.","price":499,"discountPercentage":10.58,"rating":4.09,"stock":32,"brand":"Huawei","category":"smartphones","thumbnail":"https://i.dummyjson.com/data/products/5/thumbnail.jpg","images":["https://i.dummyjson.com/data/products/5/1.jpg","https://i.dummyjson.com/data/products/5/2.jpg","https://i.dummyjson.com/data/products/5/3.jpg"]},{"id":6,"title":"MacBook Pro","description":"MacBook Pro 2021 with mini-LED display may launch between September, November","price":1749,"discountPercentage":11.02,"rating":4.57,"stock":83,"brand":"Apple","category":"laptops","thumbnail":"https://i.dummyjson.com/data/products/6/thumbnail.png","images":["https://i.dummyjson.com/data/products/6/1.png","https://i.dummyjson.com/data/products/6/2.jpg","https://i.dummyjson.com/data/products/6/3.png","https://i.dummyjson.com/data/products/6/4.jpg"]},{"id":7,"title":"Samsung Galaxy Book","description":"Samsung Galaxy Book S (2020) Laptop With Intel Lakefield Chip, 8GB of RAM Launched","price":1499,"discountPercentage":4.15,"rating":4.25,"stock":50,"brand":"Samsung","category":"laptops","thumbnail":"https://i.dummyjson.com/data/products/7/thumbnail.jpg","images":["https://i.dummyjson.com/data/products/7/1.jpg","https://i.dummyjson.com/data/products/7/2.jpg","https://i.dummyjson.com/data/products/7/3.jpg","https://i.dummyjson.com/data/products/7/thumbnail.jpg"]},{"id":8,"title":"Microsoft Surface Laptop 4","description":"Style and speed. Stand out on HD video calls backed by Studio Mics. Capture ideas on the vibrant touchscreen.","price":1499,"discountPercentage":10.23,"rating":4.43,"stock":68,"brand":"Microsoft Surface","category":"laptops","thumbnail":"https://i.dummyjson.com/data/products/8/thumbnail.jpg","images":["https://i.dummyjson.com/data/products/8/1.jpg","https://i.dummyjson.com/data/products/8/2.jpg","https://i.dummyjson.com/data/products/8/3.jpg","https://i.dummyjson.com/data/products/8/4.jpg","https://i.dummyjson.com/data/products/8/thumbnail.jpg"]},{"id":9,"title":"Infinix INBOOK","description":"Infinix Inbook X1 Ci3 10th 8GB 256GB 14 Win10 Grey – 1 Year Warranty","price":1099,"discountPercentage":11.83,"rating":4.54,"stock":96,"brand":"Infinix","category":"laptops","thumbnail":"https://i.dummyjson.com/data/products/9/thumbnail.jpg","images":["https://i.dummyjson.com/data/products/9/1.jpg","https://i.dummyjson.com/data/products/9/2.png","https://i.dummyjson.com/data/products/9/3.png","https://i.dummyjson.com/data/products/9/4.jpg","https://i.dummyjson.com/data/products/9/thumbnail.jpg"]}]
+  const total=Array.from(product).length
+ 
+let products=product.slice(( ((Page==1)?0:12) *(Page-((Page==1)?0:1))), (12*Page))
+
   
- 
+if (products ==null) {
+  return (<h1 className="text-4xl font-bold tracking-tight text-gray-900">loading ....</h1>)
+}
+
+
+
   return (
+    <>
+    <Filter >
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4  sm:px-6  lg:max-w-7xl lg:px-8 ">
-      
 
-        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+
+        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
           {products.map((product) => (
-            <div key={product.id} className="group relative border-gray-500  border-2  p-3 shadow-2xl rounded-md">
-              
-              <div className=" aspect-h-1 aspect-w-1 w-full  rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75  lg:h-80 border-2 overflow-hidden ">
+            <div key={product.id} className="lg:h-72 group relative border-gray-500  border-2  p-3 shadow-2xl rounded-md">
+
+              <div className=" aspect-h-1 aspect-w-1 w-full  rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75  lg:h-4/5 border-2 overflow-hidden ">
                 <img
                   src={product.thumbnail}
                   alt={product.title}
-                  className="h-full w-full object-cover object-center lg:h-full lg:w-full group-hover:scale-125 ease-in duration-300 "
+                  className="h-full w-full h- object-cover object-center  lg:h-full group-hover:scale-125 ease-in duration-300 "
                 />
               </div>
               <div className="mt-4 flex justify-between">
@@ -38,31 +63,35 @@ export default async function ProducList() {
                   <h3 className="h-2 text-gray-700">
                     <Link href={`/product/${product.id}`}>
                       <span aria-hidden="true" className="absolute inset-0" />
-                      {(product.title).slice(0,12)}..
+                      {(product.title).slice(0, 12)}..
                     </Link>
                   </h3>
-                <div className="m-3">
-                <StarIcon className="h-5 m-2 text-yellow-400 inline">
-                  
-                  </StarIcon>
-                  <span>{product.rating}</span>
-                </div>
-                 
+                  <div className="m-3">
+                    <StarIcon className="h-5 m-2 text-yellow-400 inline">
+
+                    </StarIcon>
+                    <span>{Math.round(product.rating*10)/10}</span>
+                  </div>
+
                 </div>
                 <div className="flex flex-col">
                   <p className="text-sm  font-medium text-gray-900">
-                    ${Math.floor(product.price-(product.price*(product.discountPercentage/100)))}
+                    ${Math.floor(product.price - (product.price * (product.discountPercentage / 100)))}
                   </p>
                   <p className="text-sm  font-medium text-gray-500 line-through">
                     ${product.price}
                   </p>
                 </div>
               </div>
-            
+
             </div>
           ))}
         </div>
       </div>
     </div>
+    {Page}
+    <Pagination Page={Page} setPage={setPage} totalPages={totalPages} totalProduct={total} />
+    </Filter>
+    </>
   );
 }
