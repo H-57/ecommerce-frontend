@@ -4,11 +4,11 @@ import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import { useDispatch } from 'react-redux'
-import { fetchBYFilter } from '@/store/slices/products'
+import { fetchBYFilter } from '../home/productsSlice'
 const sortOptions = [
-  { name: 'Best Rating', current: false },
-  { name: 'Price: Low to High', current: false },
-  { name: 'Price: High to Low',current: false },
+  { name: 'Best Rating', sort:"rating",order:'desc' },
+  { name: 'Price: Low to High', sort:"price",order:'asc' },
+  { name: 'Price: High to Low',sort:"price",order:'desc'},
 ]
 const subCategories = [
 
@@ -213,18 +213,20 @@ useEffect(()=>{
 },[Filter])
 
   const handelFilters=(e,section,option)=>{
-     if(e.target.checked)
-    {
-      const filterData={...Filter,[section.id]:option.value}
+    const filterData={...Filter}
+     if(e.target.checked){
+      filterData[section.id]=option.value 
       setFilter(filterData)
     }
    else{
-    const filterData={}
+   delete filterData[section.id]
+
     setFilter(filterData)
    }
-    
-    
-    
+  }
+  const handelSort=(e,option)=>{
+const filterData={...Filter,_sort:option.sort,_order:option.order}
+setFilter(filterData)
   }
 
   return (
@@ -351,18 +353,18 @@ useEffect(()=>{
                   <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                       {sortOptions.map((option) => (
-                        <Menu.Item key={option.name}>
+                        <Menu.Item className='cursor-pointer' key={option.name}>
                           {({ active }) => (
-                            <a
-                              href={option.href}
+                            <p
+                              onClick={(e)=>handelSort(e,option)}
                               className={classNames(
-                                option.current ? 'font-medium text-gray-900' : 'text-gray-500',
+                                option.current ? 'font-medium cursor-pointer text-gray-900' : 'text-gray-500',
                                 active ? 'bg-gray-100' : '',
                                 'block px-4 py-2 text-sm'
                               )}
                             >
                               {option.name}
-                            </a>
+                            </p>
                           )}
                         </Menu.Item>
                       ))}
