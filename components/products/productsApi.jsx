@@ -23,3 +23,12 @@ for(let key in filters){
     
    } 
   
+
+   export async function  fetchSingleProduct(id) {
+
+    // TODO: change api urls
+    const response= await(await fetch(`http://localhost:4000/products/${id}`)).json()
+    
+    return await response
+    
+   } 

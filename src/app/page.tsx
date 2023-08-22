@@ -1,6 +1,6 @@
 
 
-import ProductList from "../../components/home/ProductList"
+import ProductList from "../../components/products/ProductList"
 
 
 

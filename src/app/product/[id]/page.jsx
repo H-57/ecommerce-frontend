@@ -1,12 +1,12 @@
-import Product from "../../../../components/SingleProduct/SingleProduct"
 
-export default function ProductPage() {
+import ProductDetail from "../../../../components/products/SingleProduct"
 
+function SinglePage() {
   return (
     <>
-  <Product></Product>
-    
-  
+    <ProductDetail></ProductDetail>
     </>
   )
 }
+
+export default SinglePage

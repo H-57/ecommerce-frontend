@@ -4,7 +4,7 @@ import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import { useDispatch } from 'react-redux'
-import { fetchBYFilter } from '../home/productsSlice'
+import { fetchBYFilter } from '../products/productsSlice'
 const sortOptions = [
   { name: 'Best Rating', sort:"rating",order:'desc' },
   { name: 'Price: Low to High', sort:"price",order:'asc' },
