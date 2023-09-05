@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"next dev\" \"json-server --watch db.json --port 4000\"",
+    "dev": "concurrently \"next dev\" \"json-server --host 192.168.43.169 --watch db.json --port 4000\"",
     "build": "next build",
     "start": "concurrently \"next start\" \"json-server --watch db.json --port 4000\"",
     "lint": "next lint"
