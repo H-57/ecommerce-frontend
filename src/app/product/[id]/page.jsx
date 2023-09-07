@@ -1,5 +1,5 @@
 
-import ProductDetail from "../../../../components/products/SingleProduct"
+import ProductDetail from "../../../components/products/SingleProduct"
 
 function SinglePage() {
   return (

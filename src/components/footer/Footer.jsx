@@ -1,3 +1,7 @@
+import Image from "next/image";
+
+
+
 function Footer() {
   return (
     <>
@@ -8,7 +12,8 @@ function Footer() {
             <p> Buy what you want. </p>
             <div className="flex justify-center my-10">
               <div className="flex items-center border w-auto rounded-lg px-4 py-2 w-52 mx-2">
-                <img
+                <Image
+                width={400} height={400}
                   src="https://cdn-icons-png.flaticon.com/512/888/888857.png"
                   className="w-7 md:w-8"
                 />
@@ -18,7 +23,8 @@ function Footer() {
                 </div>
               </div>
               <div className="flex items-center border w-auto rounded-lg px-4 py-2 w-44 mx-2">
-                <img
+                <Image
+                width={400} height={400}
                   src="https://cdn-icons-png.flaticon.com/512/888/888841.png"
                   className="w-7 md:w-8"
                 />

@@ -4,8 +4,10 @@ import { useEffect,useState } from "react";
 import { fetchAllProducts } from "./productsSlice";
 import { StarIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
+
 import Pagination from "../pagination/Pagination"
 import Filter  from"../filters/Filter"
+import Image from "next/image";
 export default function ProducList() {
 const product = useSelector((state) => state.product.products);
 const dispatch = useDispatch()
@@ -66,7 +68,8 @@ if (products ==null) {
             <div key={product.id} className="lg:h-72 group relative border-gray-500  border-2  p-3 shadow-2xl rounded-md">
 
               <div className=" aspect-h-1 aspect-w-1 w-full  rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75  lg:h-4/5 border-2 overflow-hidden ">
-                <img
+                <Image
+                width={400} height={400}
                   src={product.thumbnail}
                   alt={product.title}
                   className="h-full w-full h- object-cover object-center  lg:h-full group-hover:scale-125 ease-in duration-300 "
