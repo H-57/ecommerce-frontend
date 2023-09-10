@@ -21,7 +21,7 @@ export default function Custom404() {
         </div>
       </div>
       <div>
-        <Image src="https://i.ibb.co/G9DC8S0/404-2.png" alt="image" width={400} height={400} />
+        <Image src="https://i.ibb.co/G9DC8S0/404-2.png" alt="image" width={600} height={600} />
       </div>
     </div>
   </div>

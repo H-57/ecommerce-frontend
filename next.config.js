@@ -8,7 +8,7 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ["i.dummyjson.com","tailwindui.com","images.unsplash.com","cdn-icons-png.flaticon.com"],
+    domains: ["i.dummyjson.com","tailwindui.com","images.unsplash.com","cdn-icons-png.flaticon.com","i.ibb.co"],
   }
 }
 module.exports = nextConfig
