@@ -1,6 +1,8 @@
 "use client"
 import Image from 'next/image'
-import {usePathname } from 'next/navigation'
+
+import ErrorPage from '../error/error'
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { RadioGroup } from '@headlessui/react'
@@ -98,7 +100,7 @@ export default function SingleProduct() {
   
   const [selectedColor, setSelectedColor] = useState(colors[0])
   const [selectedSize, setSelectedSize] = useState(sizes[2])
-
+  const router = useRouter()
   useEffect(()=>{
 dispatch(fetchProductDetails(id))
 console.log(product)
@@ -110,6 +112,11 @@ if(!product){
   <h1>load</h1>
   )
 }
+
+if(product.message){
+ return <ErrorPage/>
+}
+
   return (
     <div className="bg-white">
      

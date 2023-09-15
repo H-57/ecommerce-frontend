@@ -15,7 +15,7 @@ import Image from "next/image";
 const navigation = [
   { name: "Home", href: "/", current: true },
   { name: "Login", href: "/login", current: false },
-  { name: "SingleProduct", href: "/product/55", current: false },
+  { name: "SingleProduct", href: "/product/6503dc180c41cd28d6430d4a", current: false },
   { name: "Wishlist", href: "/wishlist", current: false },
 ];
 

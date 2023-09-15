@@ -2,17 +2,40 @@
  "use client"
 
  import Link from "next/link"
-  
+  import { useEffect } from "react";
  import { useForm } from "react-hook-form";
-
+import { useDispatch,useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import{signUp}from "../authSlice"
  
 export default function SignUp() {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
+const dispatch=useDispatch()
+let Data=useSelector((state)=>state.auth.data)
+
+const notify = (message,status) => {
+  if(status=="success"){
+    toast.success(message)
+
+  }
+  else{
+    toast.error(message)
+    
+  }
+  }
+
+
+useEffect(()=>{
+ 
+    notify(Data.message,Data.status)
+   
+},[Data])
 
 
     return (
       <>
-        
+        <ToastContainer position="top-center" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored"/>      
         <div className="bg-slate-900 flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
            
@@ -22,7 +45,7 @@ export default function SignUp() {
           </div>
   
           <div className=" marker:mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form noValidate className="space-y-6" onSubmit={handleSubmit((data)=>{console.log(data)})} >
+            <form noValidate className="space-y-6" onSubmit={handleSubmit((data)=>{dispatch(signUp(data))})} >
               <div>
                 <label  htmlFor="name" className="text-white block text-sm font-medium leading-6 ">
                   Name

@@ -5,7 +5,7 @@ export async function  fetchProducts() {
     // TODO: change api urls
     const response= await(await fetch(`${process.env.HOST}/products`)).json()
     
-    console.log("running api"+process.env.HOST)
+    
     return await response
     
    } 
