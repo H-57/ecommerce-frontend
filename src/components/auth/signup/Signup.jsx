@@ -2,17 +2,20 @@
  "use client"
 
  import Link from "next/link"
+ import { useRouter } from "next/navigation";
   import { useEffect } from "react";
  import { useForm } from "react-hook-form";
 import { useDispatch,useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import{signUp}from "../authSlice"
+import{signUp,clear, setToken}from "../authSlice"
  
 export default function SignUp() {
+  const router=useRouter()
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
 const dispatch=useDispatch()
 let Data=useSelector((state)=>state.auth.data)
+const token=useSelector((state) => state.auth.token)
 
 const notify = (message,status) => {
   if(status=="success"){
@@ -26,12 +29,28 @@ const notify = (message,status) => {
   }
 
 
-useEffect(()=>{
- 
-    notify(Data.message,Data.status)
-   
-},[Data])
+  useEffect(()=>{
+    const token=localStorage.getItem("uid")
+  if(token){
+    dispatch(setToken(token))
+  }
+  },[])
 
+  useEffect(() => {
+    if (Data) {
+      notify(Data.message, Data.status)
+      dispatch(setToken(Data.token))
+      const clearData = setTimeout(dispatch(clear()), 2000)
+      
+      return () => clearTimeout(clearData);
+    }
+
+
+  }, [Data?.message])
+
+if(token){
+  router.push("/")
+}
 
     return (
       <>

@@ -3,7 +3,8 @@ import{getUser,setUser}from "./authApi"
 
 const initialState={
     status: 'idle',
-    data:"1"
+    data:null,
+    token:null
 }
 
 export const loginUser = createAsyncThunk(
@@ -14,6 +15,10 @@ export const signUp = createAsyncThunk(
 const authSlice=createSlice({
   name:"authslice",
 initialState,
+reducers:{
+  clear:(state)=>{state.data=null},
+  setToken:(state,action)=>{state.token=action.payload}
+},
     extraReducers: (builder) => {
         builder
           .addCase(loginUser.pending, (state) => {
@@ -37,4 +42,5 @@ initialState,
 }
 })
 
+export const { clear,setToken } = authSlice.actions
 export default authSlice.reducer;
