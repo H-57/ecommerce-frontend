@@ -3,7 +3,7 @@ import{getCart,setCart}from "./cartApi"
 
 const initialState={
     status: 'idle',
-    products:null,
+    products:[],
     
 }
 
