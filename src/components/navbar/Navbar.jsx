@@ -32,7 +32,11 @@ export default function Navbar() {
   const [nav, setnav] = useState(navigation[0])
   const cartProducts=useSelector((state)=>state.cart.products)
   const authCheck=useSelector((state)=>state.auth.token)
+  
+  useEffect(()=>{
 
+    dispatch(getCartAsync())
+  },[authCheck])
 
 
   useEffect(()=>{
