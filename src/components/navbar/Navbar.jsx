@@ -1,16 +1,20 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 
 import {
+  ArrowRightOnRectangleIcon,
   Bars3Icon,
  
   ShoppingCartIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import{setToken}from "../auth/authSlice"
+import { getCartAsync } from "../cart/cartSlice";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
@@ -24,7 +28,24 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+  const dispatch=useDispatch()
   const [nav, setnav] = useState(navigation[0])
+  const cartProducts=useSelector((state)=>state.cart.products)
+  const authCheck=useSelector((state)=>state.auth.token)
+
+
+
+  useEffect(()=>{
+    const token=localStorage.getItem("uid")
+  if(token){
+    dispatch(setToken(token))
+   
+
+  }
+  },[])
+  
+  
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -47,13 +68,13 @@ export default function Navbar() {
                   <Image
                   width={400} height={400}
                     className="block h-8 w-auto lg:hidden"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                    src="/logo.png"
                     alt="Your Company"
                   />
                   <Image
                   width={400} height={400}
                     className="hidden h-8 w-auto lg:block"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                    src="/logo.png"
                     alt="Your Company"
                   />
                 </div>
@@ -87,19 +108,19 @@ export default function Navbar() {
                   <ShoppingCartIcon className="h-6 w-6 " aria-hidden="true" />
                  
                 </button> 
-                <span className="   items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10  absolute top-1 right-10 lg:right-8  ">
-                    10
-                  </span>
+               {cartProducts?.length>0&& <span className="   items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10  absolute top-1 right-10 lg:right-8  ">
+                    {cartProducts?.length}
+                  </span>}
                   </Link>
                 {/* Profile dropdown */}
-                <Menu as="div" className="relative ml-3">
+               {authCheck? <Menu as="div" className="relative ml-3">
                   <div>
                     <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="sr-only">Open user menu</span>
                       <Image
                       width={400} height={400}
                         className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        src="/user.png"
                         alt=""
                       />
                     </Menu.Button>
@@ -143,7 +164,7 @@ export default function Navbar() {
                       </Menu.Item>
                     </Menu.Items>
                   </Transition>
-                </Menu>
+                </Menu>:<Link href={"/login"} title="login"><ArrowRightOnRectangleIcon  className="h-6 w-6 text-white " aria-hidden="true"/></Link>}
               </div>
             </div>
           </div>

@@ -2,12 +2,14 @@
 import Image from 'next/image'
 
 import ErrorPage from '../error/error'
-import { useRouter, usePathname, useSearchParams } from 'next/navigation'
+import { useRouter, usePathname,  } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { RadioGroup } from '@headlessui/react'
 import {useDispatch,useSelector}from "react-redux"
 import {fetchProductDetails}from "./productsSlice"
+import{setCartAsync} from "../cart/cartSlice"
+import { toast } from 'react-toastify'
 
 
 // const product = {
@@ -71,9 +73,11 @@ function classNames(...classes) {
 
 export default function SingleProduct() {
  const id=usePathname().slice(9)
-
+ const token=useSelector((state) => state.auth.token)
   const dispatch=useDispatch()
   const product=useSelector((state)=>state.product.productDetails)
+
+
 
  const colors= [
         { name: 'White', class: 'bg-white', selectedClass: 'ring-gray-400' },
@@ -101,10 +105,31 @@ export default function SingleProduct() {
   const [selectedColor, setSelectedColor] = useState(colors[0])
   const [selectedSize, setSelectedSize] = useState(sizes[2])
   const router = useRouter()
+
+const addToCart=()=>{
+if(token){
+  try {
+    dispatch(setCartAsync({product:product.id}))
+    toast.success("item added successfully")
+  } catch (error) {
+    toast.error("something got error")
+  }
+
+}
+else{
+  router.push("/login")
+}
+  
+ 
+
+}
+
+
   useEffect(()=>{
 dispatch(fetchProductDetails(id))
-console.log(product)
+
   },[])
+
 
 
 if(!product){
@@ -318,7 +343,9 @@ if(product.message){
               </div>
 
               <button
-              
+              onClick={(e)=>{
+                e.preventDefault()
+                addToCart()}}
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 Add to bag

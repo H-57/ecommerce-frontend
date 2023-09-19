@@ -8,8 +8,9 @@ import{store} from "./store"
 
 
 
-function ReduxProvider({children}) {
 
+function ReduxProvider({children}) {
+ 
 
 
   return (

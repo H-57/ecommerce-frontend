@@ -4,10 +4,11 @@ import Link from "next/link"
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { loginUser, clear, setToken } from "../authSlice"
-import { ToastContainer, toast, Flip } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import {toast} from 'react-toastify';
+
 import { useEffect } from "react";
-import Router, { useRouter } from "next/navigation";
+import  { useRouter } from "next/navigation";
+
 
 
 export default function Login() {
@@ -23,18 +24,15 @@ export default function Login() {
     if (status == "success") {
       toast.success(message)
       localStorage.setItem("uid", Data.token)
+      
+      
 
     }
     else {
       toast.error(message)
     }
   }
-  useEffect(()=>{
-    const token=localStorage.getItem("uid")
-  if(token){
-    dispatch(setToken(token))
-  }
-  },[])
+ 
 
   useEffect(() => {
     if (Data) {
@@ -49,11 +47,14 @@ export default function Login() {
   }, [Data?.message])
 
 if(token){
-  router.push("/")
+  setTimeout(()=>{
+    router.push("/")
+  },1500)
+ 
 }
   return (
     <>
-      <ToastContainer position="top-center" autoClose={2000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored" transition={Flip} />
+      
       <div className="bg-slate-900 flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
 

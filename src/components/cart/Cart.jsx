@@ -1,44 +1,23 @@
 "use client"
 import Image from 'next/image';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
-import { Dialog, Transition } from '@headlessui/react';
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import { useSelector } from 'react-redux';
 
-const products = [
-  {
-    id: 1,
-    name: 'Throwback Hip Bag',
-    href: '#',
-    color: 'Salmon',
-    price: '$90.00',
-    quantity: 1,
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-    imageAlt:
-      'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-  },
-  {
-    id: 2,
-    name: 'Medium Stuff Satchel',
-    href: '#',
-    color: 'Blue',
-    price: '$32.00',
-    quantity: 1,
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-    imageAlt:
-      'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-  },
-  // More products...
-];
 
 export default function Cart() {
-  
  
-  const [open, setOpen] = useState(true);
+ 
+  const products=useSelector((state)=>state.cart.products)
+  
+const [open, setOpen] = useState(true);
+
+
+if(!products){
+return <h1>loading...</h1>
+}
 
   return (
     <>
@@ -50,12 +29,12 @@ export default function Cart() {
             </h1>
             <div className="flow-root">
               <ul role="list" className="-my-6 divide-y divide-gray-200">
-                {products.map((product) => (
-                  <li key={product.id} className="flex py-6">
+                {products.length>0&&products.map((elm) => (
+                  <li key={elm.id} className="flex py-6">
                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                       <Image
-                        src={product.imageSrc}
-                        alt={product.imageAlt}
+                        src={elm.product.thumbnail}
+                        alt={elm.product.title}
                         width={400} height={400}
                         className="h-full w-full object-cover object-center"
                       />
@@ -65,12 +44,12 @@ export default function Cart() {
                       <div>
                         <div className="flex justify-between text-base font-medium text-gray-900">
                           <h3>
-                            <a href={product.href}>{product.name}</a>
+                            <a href={"/products/"+elm.product.id}>{elm.product.title}</a>
                           </h3>
-                          <p className="ml-4">{product.price}</p>
+                          <p className="ml-4">${elm.product.price}</p>
                         </div>
                         <p className="mt-1 text-sm text-gray-500">
-                          {product.color}
+                          {elm.product?.color}
                         </p>
                       </div>
                       <div className="flex flex-1 items-end justify-between text-sm">
@@ -81,7 +60,7 @@ export default function Cart() {
                           >
                             Qty
                           </label>
-                          <select>
+                          <select value={elm.quantity}>
                             <option value="1">1</option>
                             <option value="2">2</option>
                           </select>

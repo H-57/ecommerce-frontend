@@ -276,7 +276,7 @@ setFilter(filterData)
                   
 
                     {filters.map((section) => (
-                      <Disclosure as="div" key={section.id} className="border-t border-gray-200 px-4 py-6">
+                      <Disclosure as="div" key={section.id} className=" h-8 border-t border-gray-200 px-4 py-6">
                         {({ open }) => (
                           <>
                             <h3 className="-mx-2 -my-3 flow-root">
@@ -325,8 +325,8 @@ setFilter(filterData)
           </Dialog>
         </Transition.Root>
 
-        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 sticky">
-          <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
+        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 sticky ">
+          <div className=" sticky z-10 lg:top-[-92px] bg-white flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">Products</h1>
 
             <div className="flex items-center">
@@ -416,7 +416,7 @@ setFilter(filterData)
                           </Disclosure.Button>
                         </h3>
                         <Disclosure.Panel className="pt-6">
-                          <div className="space-y-4">
+                          <div className="space-y-4 h-[200px] overflow-y-scroll ">
                             {section.options.map((option, optionIdx) => (
                               <div key={option.value} className="flex items-center">
                                 <input
